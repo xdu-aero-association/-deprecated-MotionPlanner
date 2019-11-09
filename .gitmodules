@@ -1,0 +1,3 @@
+[submodule "src/grid_path_searcher"]
+    path = src/grid_path_searcher
+    url = git://github.com/chunyang-zhang/grid_path_searcher.git
