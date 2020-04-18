@@ -46,7 +46,7 @@ rviz
 
 显示出 rviz 初始页面
 
-![image1](https://github.com/uav-operation-system/UAV_motionplanner/raw/master/image/image1.jpg)
+![image1](./image/image1.jpg)
 
 5.  打开 rviz 配置文件
 
@@ -60,7 +60,7 @@ rviz
 
 6.  部署 rviz插件（这一步由于配置文件已经被我更新保存，所以不用执行）点击“+”号，添加 Goal3DTool 插件
 
-![image3](https://github.com/uav-operation-system/UAV_motionplanner/raw/master/image/image3.jpg)
+![image3](./image/image3.jpg)
 
 >   并点击“-”号，去掉 2D Nav Goal 和 2D Pose Estimate
 
@@ -73,7 +73,7 @@ roslaunch grid\_path\_searcher demo.launch
 
 >   画面切到 rivz，可以看到，程序自动载入了点云地图
 
-![image4](https://github.com/uav-operation-system/catkin_motionplanner/raw/master/image/image4.jpg)
+![image4](./image/image4.jpg)
 
 ## hw\_2 Part
 
@@ -335,7 +335,7 @@ JPSPathFinder::JPSGetSucc (...)；完成JPS难度不大。
 
 ### Matlab_work
 
-![image5](https://github.com/uav-operation-system/UAV_motionplanner/raw/master/image/image5.jpg)
+![image5](./image/image5.jpg)
 
 打开工作文件夹，按照STEP提示完成RRT.m
 
@@ -349,7 +349,7 @@ JPSPathFinder::JPSGetSucc (...)；完成JPS难度不大。
 
 1.2 进入 Download 页面，下载保存脚本文件 install-ompl-ubuntu.sh
 
-![image6](https://github.com/uav-operation-system/UAV_motionplanner/raw/master/image/image6.jpg)
+![image6](./image/image6.jpg)
 
 1.3 运行脚本文件在脚本文件保存的路径下，右键打开终端，运行命令
 
