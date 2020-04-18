@@ -56,7 +56,7 @@ rviz
 
 打开之后显示如下画面，此时因为还未运行程序，所以地图没有初始化，看不到点云三维地图。
 
-![image2](https://github.com/uav-operation-system/UAV_motionplanner/raw/master/image/image2.jpg)
+![image2](./image/image2.jpg)
 
 6.  部署 rviz插件（这一步由于配置文件已经被我更新保存，所以不用执行）点击“+”号，添加 Goal3DTool 插件
 
