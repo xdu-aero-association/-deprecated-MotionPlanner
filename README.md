@@ -1,5 +1,8 @@
 # Motion Planning for UAV in ROS Environment
 
+深蓝学院课程百度网盘链接：https://pan.baidu.com/s/1x3L3g4pFXXHMz6-Kfd8iDw 
+提取码：8zct
+
 ## hw\_1 Part
 
 ### Ros_work
