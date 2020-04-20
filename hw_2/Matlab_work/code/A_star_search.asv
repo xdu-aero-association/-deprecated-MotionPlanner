@@ -1,13 +1,16 @@
 function path = A_star_search(map,MAX_X,MAX_Y)
 %%
+%A * algorithm details link is as follows:
+%https://blog.csdn.net/hitwhylz/article/details/23089415
 %This part is about map/obstacle/and other settings
     %pre-process the grid map, add offset
+    %The first line is the starting point, the last line is the ending point?
     size_map = size(map,1);
     Y_offset = 0;
     X_offset = 0;
     
     %Define the 2D grid map array.
-    %Obstacle=-1, Target = 0, Start=1
+    %Obstacle=-1, Target = 0, Start=1, space = 2
     MAP=2*(ones(MAX_X,MAX_Y));
     
     %Initialize MAP with location of the target
@@ -59,29 +62,30 @@ function path = A_star_search(map,MAX_X,MAX_Y)
     end
     CLOSED_COUNT=size(CLOSED,1);
     %set the starting node as the first node
-    xNode=xStart;
-    yNode=yStart;
+    xNode=xval;
+    yNode=yval;
     OPEN_COUNT=1;
     goal_distance=distance(xNode,yNode,xTarget,yTarget);
     path_cost=0;
+    %A colon is to retrieve all the data on line OPEN_COUNT
     OPEN(OPEN_COUNT,:)=insert_open(xNode,yNode,xNode,yNode,goal_distance,path_cost,goal_distance);
-%     OPEN(OPEN_COUNT,1)=0;
-%     CLOSED_COUNT=CLOSED_COUNT+1;
-%     CLOSED(CLOSED_COUNT,1)=xNode;
-%     CLOSED(CLOSED_COUNT,2)=yNode;
+    %OPEN(OPEN_COUNT,1)=0;
+    %CLOSED_COUNT=CLOSED_COUNT+1;
+    %CLOSED(CLOSED_COUNT,1)=xNode;
+    %CLOSED(CLOSED_COUNT,2)=yNode;
     NoPath=1;
-    current_x = xStart;
-    current_y = yStart;
+
 %%
 %This part is your homework
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % START ALGORITHM
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    while(1) %you have to dicide the Conditions for while loop exit 
+    while(1) 
+        %you have to dicide the Conditions for while loop exit 
         % check if open set is empty or not
         current_idx = min_fn(OPEN,OPEN_COUNT,xTarget,yTarget);
         if current_idx == -1
-            fprintf(1,'No Path Found !!!\n')
+            fprintf(1,'No Path Found !!!')
             break
         end
         current_x = OPEN(current_idx,2);
@@ -89,7 +93,7 @@ function path = A_star_search(map,MAX_X,MAX_Y)
         OPEN(current_idx,1) = 0;
         % check if we have reached goal
         if xTarget == current_x && yTarget == current_y
-            fprintf(1,'Goal Reached !!!\n')
+            fprintf(1,'Goal Reached !!!')
             NoPath = 0;
             break;
         end
@@ -105,27 +109,22 @@ function path = A_star_search(map,MAX_X,MAX_Y)
             neighbor_x = exp_array(i,1);
             neighbor_y = exp_array(i,2);
             neighbor_idx = node_index(OPEN,neighbor_x,neighbor_y);
-            % if neighbor in closed set & new gn is smaller
-            if neighbor_idx <= size(OPEN,1) % && OPEN(neighbor_idx,1) == 0
-                if OPEN(neighbor_idx,7) >= exp_array(i,4)
-                    OPEN(neighbor_idx,6) = exp_array(i,3);
-                    OPEN(neighbor_idx,7) = exp_array(i,4);
-                    OPEN(neighbor_idx,8) = exp_array(i,5);
+            neighbor_hn = distance(neighbor_x,neighbor_y,xTarget,yTarget);
+            neighbor_gn_new = exp_array(i,4);
+            neighbor_fn_new = neighbor_gn_new + neighbor_hn;
+            % if neighbor in open set & new gn is smaller
+            if neighbor_idx <= size(OPEN,1) && OPEN(neighbor_idx,1) == 1
+                if OPEN(neighbor_idx,7) > neighbor_gn_new
+                    OPEN(neighbor_idx,6) = neighbor_hn;
+                    OPEN(neighbor_idx,7) = neighbor_gn_new;
+                    OPEN(neighbor_idx,8) = neighbor_fn_new;
                     OPEN(neighbor_idx,4) = current_x;
                     OPEN(neighbor_idx,5) = current_y;
                 end
-%             elseif neighbor_idx <= size(OPEN,1) && OPEN(neighbor_idx,1) == 1
-%                 if OPEN(neighbor_idx,7) >= exp_array(i,4)
-%                     OPEN(neighbor_idx,6) = exp_array(i,3);
-%                     OPEN(neighbor_idx,7) = exp_array(i,4);
-%                     OPEN(neighbor_idx,8) = exp_array(i,5);
-%                     OPEN(neighbor_idx,4) = current_x;
-%                     OPEN(neighbor_idx,5) = current_y;
-%                 end
             % if it's a new node
             else
                 OPEN_COUNT = OPEN_COUNT+1;
-                OPEN(OPEN_COUNT,:)=insert_open(neighbor_x,neighbor_y,current_x,current_y,exp_array(i,3),exp_array(i,4),exp_array(i,5));
+                OPEN(OPEN_COUNT,:)=insert_open(neighbor_x,neighbor_y,current_x,current_y,neighbor_hn,neighbor_gn_new,neighbor_fn_new);
             end
         end
     end %End of While Loop
@@ -138,16 +137,7 @@ function path = A_star_search(map,MAX_X,MAX_Y)
     %How to get the optimal path after A_star search?
     %please finish it
     %
-    assignin('base','OPEN',OPEN);
-    path = [];
     if NoPath == 0
-        path = [current_x current_y;path];
-        while current_x ~= xStart || current_y ~= yStart
-            node_idx = node_index(OPEN,current_x,current_y);
-            current_x = OPEN(node_idx,4);
-            current_y = OPEN(node_idx,5);
-            path = [current_x current_y;path];
-        end
-        path = [current_x current_y;path];
+        path = [];
     end
 end
